@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sample.DAO.PurchaseDAO;
+import com.sample.DTO.PurchaseItemDto;
+import com.sample.DTO.PurchaseOrderHeaderDto;
 import com.sample.entity.PurchaseItem;
 import com.sample.entity.PurchaseOrderHeader;
 
@@ -21,75 +23,92 @@ public class PurchaseOrderImpl {
 	
 	
 	@Transactional
-	public Response addPurchaseOrder(PurchaseOrderHeader purchaseOrderHeader)
+	public Response addPurchaseOrder(PurchaseOrderHeaderDto purchaseOrderHeaderDto)
 	{
-		return purchaseDAO.addPurchaseOrder(purchaseOrderHeader);
+		return purchaseDAO.addPurchaseOrder(purchaseOrderHeaderDto);
 	}
 	
 	@Transactional
-	public List<PurchaseOrderHeader> GetPurchaseOrder(){
+	public List<PurchaseOrderHeaderDto> GetPurchaseOrder(){
 		return purchaseDAO.GetPurchaseOrder();
 	}
 	
 	@Transactional
-	public Response saveAll(PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseDAO.saveAll(purchaseOrderHeader);
+	public Response saveAll(PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseDAO.saveAll(purchaseOrderHeaderDto);
 	}
 	@Transactional
-	public Response editpurchaseOrder(PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseDAO.editpurchaseOrder(purchaseOrderHeader);
+	public Response editpurchaseOrder(PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseDAO.editpurchaseOrder(purchaseOrderHeaderDto);
 	}
 	@Transactional
-	public Response deleteOrder(int num){
-		return purchaseDAO.deleteOrder(num);
+	public Response updatePurchaseOrder(PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseDAO.updatePurchaseOrder(purchaseOrderHeaderDto);
 	}
 	@Transactional
-	public Response editPurchaseItem(PurchaseItem purchaseItem){
-		return purchaseDAO.editPurchaseItem(purchaseItem);
-	}
-	
-	@Transactional
-	public List<PurchaseOrderHeader>  getAll1(PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseDAO.getAll(purchaseOrderHeader);
+	public Response deleteOrder(PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseDAO.deleteOrder(purchaseOrderHeaderDto);
 	}
 	
 	@Transactional
-	public List<PurchaseOrderHeader>  getAll121(){
+	public List<PurchaseOrderHeaderDto>  getAll121(){
 		return purchaseDAO.getAll121();
 	}
 	
 	@Transactional
-	public List<PurchaseItem> getPurchaseItem(){
+	public List<PurchaseItemDto> getPurchaseItem(){
 	return purchaseDAO.getPurchaseItem();	
 	}
 	
-	/*@Transactional
-	public List<PurchaseOrderHeader> getPurchase(){
-		return purchaseDAO.getPurchase();
-	}*/
 	@Transactional
-	public List<PurchaseOrderHeader> getById(int  document_number){
-		return purchaseDAO.getById(document_number);
+	public List<PurchaseOrderHeaderDto> getOrderById(PurchaseOrderHeaderDto  purchaseOrderHeaderDto){
+		return purchaseDAO.getOrderById(purchaseOrderHeaderDto);
 	}
 	@Transactional
-	public List<PurchaseItem> getbyId(int id){
-		return purchaseDAO.getbyId(id);
+	public List<PurchaseItemDto> getItembyId(PurchaseItemDto purchaseItemDto){
+		return purchaseDAO.getItembyId(purchaseItemDto);
+	}
+	
+	@Transactional
+	public Response deleteitem(PurchaseItemDto purchaseItemDto){
+		return purchaseDAO.deleteitem(purchaseItemDto);
 	}
 	@Transactional
-	public Response deleteItems(int itemId){
-		return purchaseDAO.deleteItems(itemId);
-	}
-	@Transactional
-	public Response deleteitem(int itemId){
-		return purchaseDAO.deleteitem(itemId);
-	}
-	@Transactional
-	public Response updateAll(PurchaseOrderHeader purchaseOrderHeader){
+	public Response updateAll(PurchaseOrderHeaderDto purchaseOrderHeader){
 		return purchaseDAO.updateAll(purchaseOrderHeader);
 	}
 	
 	@Transactional
-	public List<PurchaseOrderHeader> getall123(){
-		return purchaseDAO.getall123();
+	public List<PurchaseItemDto> getItem(){
+		return purchaseDAO.getItem();
+	}
+	@Transactional
+	public Response editItems(PurchaseItemDto purchaseItemDto){
+		return purchaseDAO.editItems(purchaseItemDto);
+	}
+	@Transactional
+	public List<PurchaseItem> getOrderABC(){
+		return purchaseDAO.getOrderABC();
 	}
 }
+
+/*@Transactional
+public List<PurchaseOrderHeader>  getAll1(PurchaseOrderHeader purchaseOrderHeader){
+	return purchaseDAO.getAll(purchaseOrderHeader);
+}*/
+/*@Transactional
+public List<PurchaseOrderHeader> getall123(){
+	return purchaseDAO.getall123();
+}*/
+/*@Transactional
+public Response editPurchaseItem(PurchaseItemDto purchaseItemDto){
+	return purchaseDAO.editPurchaseItem(purchaseItemDto);
+}*/
+/*@Transactional
+public List<PurchaseOrderHeader> getPurchase(){
+	return purchaseDAO.getPurchase();
+}*/
+/*@Transactional
+public Response deleteItems(int itemId){
+	return purchaseDAO.deleteItems(itemId);
+}*/

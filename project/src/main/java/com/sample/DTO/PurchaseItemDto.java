@@ -1,11 +1,20 @@
 package com.sample.DTO;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.sample.entity.PurchaseOrderHeader;
 
 public class PurchaseItemDto {
 
 	private int itemId;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "document_number")
 	private PurchaseOrderHeader headerDetails;
+	
 	private String itemName;
 	private String itemPrice;
 	public int getItemId() {

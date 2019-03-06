@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sample.DTO.PurchaseItemDto;
+import com.sample.DTO.PurchaseOrderHeaderDto;
 import com.sample.entity.PurchaseItem;
 import com.sample.entity.PurchaseOrderHeader;
 import com.sample.s.PurchaseOrderImpl;
@@ -22,80 +24,104 @@ public class PurchaseOrderService {
 @Autowired
 	PurchaseOrderImpl purchaseImpl;
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-	public Response showOrders(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-	return 	purchaseImpl.addPurchaseOrder(purchaseOrderHeader);
+    // add only purchaseOrderHeader
+	@RequestMapping(value = "/addOrder", method = RequestMethod.POST, consumes = "application/json")
+	public Response showOrders(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+	return 	purchaseImpl.addPurchaseOrder(purchaseOrderHeaderDto);
 		
 	}
-	@RequestMapping(value = "/getorder", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<PurchaseOrderHeader> getOrders(){
+	// add both purchaseOrderHeader and purchaseItem
+	@RequestMapping(value = "/addAll", method = RequestMethod.POST, consumes = "application/json")
+	public Response addOrders(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseImpl.saveAll(purchaseOrderHeaderDto);
+	}
+	// update purchaseOrderHeader
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "application/json")
+	public Response editOrders(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseImpl.editpurchaseOrder(purchaseOrderHeaderDto);
+	}
+	
+	@RequestMapping(value = "/updateOrder", method = RequestMethod.POST, consumes = "application/json")
+	public Response updatePurchaseOrder(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseImpl.updatePurchaseOrder(purchaseOrderHeaderDto);
+	}
+	
+	//get only PurchaseOrderHeader
+	@RequestMapping(value = "/getOrder", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PurchaseOrderHeaderDto> getOrders(){
 		return purchaseImpl.GetPurchaseOrder();
 	}
 	
-	@RequestMapping(value = "/addorder", method = RequestMethod.POST, consumes = "application/json")
-	public Response addOrders(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseImpl.saveAll(purchaseOrderHeader);
-	}
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "application/json")
-	public Response editOrders(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseImpl.editpurchaseOrder(purchaseOrderHeader);
+	
+	//get only purchaseItem //not working
+	@RequestMapping(value = "/getitem", method = RequestMethod.GET, consumes = "application/json")
+	public List<PurchaseItemDto> getItemById(){
+		return purchaseImpl.getItem();
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = "application/json")
-	public Response deleteOrder(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseImpl.deleteOrder(purchaseOrderHeader.getDocument_number());
-	}
-	
-	@RequestMapping(value = "/edititems", method = RequestMethod.POST, consumes = "application/json")
-	public Response editItems(@RequestBody PurchaseItem purchaseItem){
-		return purchaseImpl.editPurchaseItem(purchaseItem);
-	}
-	
-	@RequestMapping(value = "/getall", method = RequestMethod.POST, consumes = "application/json")
-	public List<PurchaseOrderHeader> getALL(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseImpl.getAll1(purchaseOrderHeader);
-	}
-	
-	@RequestMapping(value = "/getall121", method = RequestMethod.GET, produces = "application/json")
-	public List<PurchaseOrderHeader> getALL(){
+	//get both purchaseOrderHeader and purchaseItem
+	@RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = "application/json")
+	public List<PurchaseOrderHeaderDto> getALL(){
 		return purchaseImpl.getAll121();
 	}
-	@RequestMapping(value = "/getitem", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<PurchaseItem> getItems(){
+	
+	//get purchaseItem without header details
+	@RequestMapping(value = "/getItems", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PurchaseItemDto> getItems(){
 		return purchaseImpl.getPurchaseItem();
 	}
 	
-	/*@RequestMapping(value = "/getorder1", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<PurchaseOrderHeader> getorder(){
-		return purchaseImpl.getPurchase();
-	}*/
-	@RequestMapping(value = "/getbyid", method = RequestMethod.POST, consumes = "application/json")
-	public List<PurchaseOrderHeader> getbyId(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
-		return purchaseImpl.getById(purchaseOrderHeader.getDocument_number());
+	@RequestMapping(value = "/getItemABC", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PurchaseItem> getorderABC(){
+		return purchaseImpl.getOrderABC();
 	}
-	@RequestMapping(value = "/getitembyid", method = RequestMethod.POST, consumes = "application/json")
-	public List<PurchaseItem> getbyid(@RequestBody PurchaseItem purchaseItem){
-		System.out.println("PurchaseOrderService.getbyid()"+purchaseItem);
-		return purchaseImpl.getbyId(purchaseItem.getItemId());
+	// get purchaseOrderHeader using document_number
+	@RequestMapping(value = "/getOrderById", method = RequestMethod.POST, consumes = "application/json")
+	public List<PurchaseOrderHeaderDto> getbyId(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseImpl.getOrderById(purchaseOrderHeaderDto);
 	}
 	
-	/*@RequestMapping(value = "/deleteItem", method = RequestMethod.POST, consumes = "application/json")
-	public Response deleteItems(@RequestBody PurchaseItem purchaseItem){
-		return purchaseImpl.deleteItems(purchaseItem.getItemId());
-	}*/
-	
-	@RequestMapping(value = "/deleteitem", method = RequestMethod.POST, consumes = "application/json")
-	public Response deleteOrder(@RequestBody PurchaseItem purchaseItem){
-		return purchaseImpl.deleteitem(purchaseItem.getItemId());
+	//get purchaseItem including headreDetails with itemId 
+	@RequestMapping(value = "/getItemById", method = RequestMethod.POST, consumes = "application/json")
+	public List<PurchaseItemDto> getbyid(@RequestBody PurchaseItemDto purchaseItemDto){
+		System.out.println("PurchaseOrderService.getItembyid()"+purchaseItemDto);
+		return purchaseImpl.getItembyId(purchaseItemDto);
 	}
 	
-	@RequestMapping(value = "/updateall", method = RequestMethod.POST, consumes = "application/json")
-	public Response update(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
+	// delete purchaseItem using itemId
+	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST, consumes = "application/json")
+	public Response deleteOrder(@RequestBody PurchaseItemDto purchaseItemDto){
+		return purchaseImpl.deleteitem(purchaseItemDto);
+	}
+	
+	// delete purchaseOrderHeader and purchaseItem using document_number
+	@RequestMapping(value = "/deleteOrder", method = RequestMethod.POST, consumes = "application/json")
+	public Response deleteOrder(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeaderDto){
+		return purchaseImpl.deleteOrder(purchaseOrderHeaderDto);
+	}
+	
+	//update both purchaseOrderHeader and purchaseItem
+	@RequestMapping(value = "/updateAll", method = RequestMethod.POST, consumes = "application/json")
+	public Response update(@RequestBody PurchaseOrderHeaderDto purchaseOrderHeader){
 		return purchaseImpl.updateAll(purchaseOrderHeader);
-	}
+	}	
 	
-	@RequestMapping(value = "/getall123", method = RequestMethod.GET, produces = "application/json")
-	public List<PurchaseOrderHeader> getALL123(){
-		return purchaseImpl.getall123();
-	}
+	// update only purchaseItem
+	@RequestMapping(value = "/updateItems", method = RequestMethod.POST, consumes = "application/json")
+	public Response updateItems(@RequestBody PurchaseItemDto purchaseItemDto){
+		return purchaseImpl.editItems(purchaseItemDto);
+	}	
 }
+
+/*@RequestMapping(value = "/getall", method = RequestMethod.POST, consumes = "application/json")
+public List<PurchaseOrderHeader> getALL(@RequestBody PurchaseOrderHeader purchaseOrderHeader){
+	return purchaseImpl.getAll1(purchaseOrderHeader);
+}
+@RequestMapping(value = "/getall123", method = RequestMethod.GET, produces = "application/json")
+public List<PurchaseOrderHeader> getALL123(){
+	return purchaseImpl.getall123();
+}*/
+/*@RequestMapping(value = "/editItems", method = RequestMethod.POST, consumes = "application/json")
+public Response editItems(@RequestBody PurchaseItemDto purchaseItemDto){
+	return purchaseImpl.editPurchaseItem(purchaseItemDto);
+}*/
