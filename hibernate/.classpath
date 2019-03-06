@@ -28,6 +28,16 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5"/>
+	<classpathentry kind="lib" path="C:/Users/sagar.chidre/.m2/repository/org/springframework/spring-orm/4.3.2.RELEASE/spring-orm-4.3.2.RELEASE.jar" sourcepath="C:/Users/sagar.chidre/.m2/repository/org/springframework/spring-orm/4.3.2.RELEASE/spring-orm-4.3.2.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="spring-orm-4.3.2.RELEASE.jar"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/sagar.chidre/.m2/repository/org/springframework/spring-orm/4.3.2.RELEASE/spring-orm-4.3.2.RELEASE-javadoc.jar!/"/>
+			<attribute name="maven.groupId" value="org.springframework"/>
+			<attribute name="maven.artifactId" value="spring-orm"/>
+			<attribute name="maven.version" value="4.3.2.RELEASE"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
